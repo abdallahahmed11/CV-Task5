@@ -1525,7 +1525,7 @@ QDateEdit::down-arrow:focus {
                </font>
               </property>
               <property name="text">
-               <string>-</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -1681,7 +1681,7 @@ QDateEdit::down-arrow:focus {
      <x>0</x>
      <y>0</y>
      <width>831</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

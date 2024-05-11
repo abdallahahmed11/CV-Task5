@@ -5,11 +5,15 @@ from ImageToMatrixClass import ImageToMatrixClass
 
 
 class Performance(Image):
-    def __init__(self, label, person_label, percentage_label):
+    def __init__(self, label, person_label, percentage_label, action_button):
         super().__init__()
         self.percentage_label = percentage_label
         self.label = label
         self.person_label = person_label
+        self.action_button = action_button
+        self.no_button_clicks = 0
+        self.correct = 0
+        self.wrong = 0
         self.img_width, self.img_height = 50, 50
         self.num_of_imgs_for_person = 8
         self.dataset_obj = DatasetClass(self.num_of_imgs_for_person)
@@ -34,29 +38,35 @@ class Performance(Image):
         self.new_coord = self.PCAClass_obj.reduce_dim()
 
     def show_performace(self):
-        correct = 0
-        wrong = 0
-        i = 0
+        original_names = []
+        finded_names = []
+        if self.no_button_clicks == 0:
+            self.action_button.setText('Next')
 
-        for img_path in self.imgs_paths_testing:
-            img = self.PCAClass_obj.image_from_path(img_path)
+        if (self.no_button_clicks == len(self.imgs_paths_testing)-1):
+            self.action_button.hide()
+            self.label.setText(f"Total correct {self.correct}")
+            self.person_label.setText(f"Total wrong {self.wrong}")
+            self.percentage_label.setText(
+                f"Percentage {round(self.correct / (self.correct + self.wrong) * 100,2)} %")
+        else:
+            img = self.PCAClass_obj.image_from_path(
+                self.imgs_paths_testing[self.no_button_clicks])
             self.display_image(img)
             new_coords_for_img = self.PCAClass_obj.new_coord(img)
 
             finded_name = self.PCAClass_obj.recognize_face(new_coords_for_img)
-            target_index = self.labels_imgs_testing[i]
+            finded_names.append(finded_name)
+            target_index = self.labels_imgs_testing[self.no_button_clicks]
             original_name = self.images_targets[target_index]
+            original_names.append(original_name)
 
             if finded_name is original_name:
-                correct += 1
-                self.label.setText(f"Correct Result, Name: {finded_name}")
+                self.correct += 1
+                self.label.setText(f"correct Result, Name: {finded_name}")
 
             else:
-                wrong += 1
-                self.label.setText(f"Wrong Result, Name: {finded_name}")
-            i += 1
+                self.wrong += 1
+                self.label.setText(f"wrong Result, Name: {finded_name}")
 
-        self.label.setText(f"Total Correct {correct}")
-        self.person_label.setText(f"Total Wrong {wrong}")
-        self.percentage_label.setText(
-            f"Percentage {correct / (correct + wrong) * 100}")
+        self.no_button_clicks += 1

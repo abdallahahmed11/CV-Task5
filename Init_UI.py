@@ -20,7 +20,7 @@ def predictor_tab(self):
 
 def performance_tab(self):
     self.performance_img_input = Performance(
-        self.label, self.person_label, self.percentage_label)
+        self.label, self.person_label, self.percentage_label, self.generate_button)
     performance_images = [self.performance_img_input]
     performance_labels = ["Image"]
     self.add_image_viewers(self.performance_layout,
