@@ -40,6 +40,9 @@ class MainApp(QMainWindow, FORM_CLASS):
 
         self.predictor_img_input.display_image(frame)
 
+    def performance_button_pressed(self):
+        self.performance_img_input.show_performace()
+
     def exit_program(self):
         sys.exit()
 
