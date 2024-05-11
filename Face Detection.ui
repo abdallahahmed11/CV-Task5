@@ -1307,7 +1307,7 @@ QDateEdit::down-arrow:focus {
            </spacer>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,15,1">
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,5,1">
             <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
