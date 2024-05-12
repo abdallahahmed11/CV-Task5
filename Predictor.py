@@ -2,7 +2,7 @@ import cv2
 from Image import Image
 from PCAClass import PCAClass
 from DatasetClass import DatasetClass
-from ImageToMatrixClass import ImageToMatrixClass
+from imageToMatrixClass import ImageToMatrixClass
 
 
 class Predictor(Image):

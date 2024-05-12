@@ -1,7 +1,7 @@
 from Image import Image
 from PCAClass import PCAClass
 from DatasetClass import DatasetClass
-from ImageToMatrixClass import ImageToMatrixClass
+from imageToMatrixClass import ImageToMatrixClass
 from sklearn.preprocessing import label_binarize
 from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
