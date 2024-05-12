@@ -2,7 +2,12 @@ from Image import Image
 from PCAClass import PCAClass
 from DatasetClass import DatasetClass
 from ImageToMatrixClass import ImageToMatrixClass
-
+from sklearn.preprocessing import label_binarize
+from sklearn.metrics import roc_curve, auc
+import matplotlib.pyplot as plt
+import numpy as np
+import cv2
+import io 
 
 class Performance(Image):
     def __init__(self, label, person_label, percentage_label, action_button):
@@ -36,6 +41,8 @@ class Performance(Image):
                                      self.img_height, self.img_width, self.num_of_elements_training, quality_percent=90)
 
         self.new_coord = self.PCAClass_obj.reduce_dim()
+    
+
 
     def show_performace(self):
         original_names = []
@@ -70,3 +77,40 @@ class Performance(Image):
                 self.label.setText(f"wrong Result, Name: {finded_name}")
 
         self.no_button_clicks += 1
+        self.plot_roc_curve()
+
+    def plot_roc_curve(self,y_true, y_score):
+        # Binarize the labels
+        classes = np.unique(y_true)
+        n_classes = len(classes)
+        y_true_binary = label_binarize(y_true, classes=classes)
+        y_score_binary = label_binarize(y_score, classes=classes)
+
+        # Compute ROC curve and ROC area for each class
+        fpr = dict()
+        tpr = dict()
+        roc_auc = dict()
+        for i in range(n_classes):
+            fpr[i], tpr[i],  = roc_curve(y_true_binary[:, i], y_score_binary[:, i])
+            roc_auc[i] = auc(fpr[i], tpr[i])
+
+        # Plot ROC curve for each class
+        plt.figure()
+        plt.figure(figsize=(20, 10))
+        for i in range(n_classes):
+            plt.plot(fpr[i], tpr[i], lw=2, label='ROC curve (area = %0.2f) for class %s' % (roc_auc[i], classes[i]))
+        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('Receiver Operating Characteristic')
+        plt.legend(loc="lower right")   
+        
+        img_buffer = io.BytesIO()
+        plt.savefig(img_buffer, format='png')
+        img_buffer.seek(0)
+        img_array = np.frombuffer(img_buffer.getvalue(), dtype=np.uint8)
+        img_buffer.close()
+        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+        return img

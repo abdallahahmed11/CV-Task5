@@ -1,6 +1,6 @@
 from Predictor import Predictor
 from Performance import Performance
-
+from Image import Image
 
 def init_ui(self):
     predictor_tab(self)
@@ -21,8 +21,9 @@ def predictor_tab(self):
 def performance_tab(self):
     self.performance_img_input = Performance(
         self.label, self.person_label, self.percentage_label, self.generate_button)
-    performance_images = [self.performance_img_input]
-    performance_labels = ["Image"]
+    self.ROC_img = Image()
+    performance_images = [self.performance_img_input , self.ROC_img]
+    performance_labels = ["Image" , "ROC"]
     self.add_image_viewers(self.performance_layout,
                            performance_images, performance_labels)
     self.performance_img_input.mouseDoubleClickEvent = lambda event: self.mouseDoubleClickEvent(
