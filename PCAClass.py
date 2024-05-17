@@ -63,7 +63,11 @@ class PCAClass:
             dist += [dist_temp]
 
         min_pos = np.argmin(dist)
-        return self.image_targets[min_pos]
+        print("Distance: ", min(dist))
+        if min(dist) > 2205:
+            return -1
+        else:
+            return self.image_targets[min_pos]
 
     def image_from_path(self, path):
         gray = cv2.imread(path, 0)

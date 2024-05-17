@@ -18,7 +18,7 @@ class Image(FigureCanvas):
             self,
             "Open Image",
             "",
-            "Image Files (*.png *.jpg *.bmp);;All Files (*)",
+            "Image Files (*.png *.jpg *.bmp *.jpeg);;All Files (*)",
         )
         if self.file_path:
             self.img_original = cv2.imread(self.file_path)

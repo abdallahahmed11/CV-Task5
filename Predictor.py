@@ -2,7 +2,7 @@ import cv2
 from Image import Image
 from PCAClass import PCAClass
 from DatasetClass import DatasetClass
-from imageToMatrixClass import ImageToMatrixClass
+from ImageToMatrixClass import ImageToMatrixClass
 
 
 class Predictor(Image):
@@ -56,6 +56,8 @@ class Predictor(Image):
             font = cv2.FONT_HERSHEY_SIMPLEX
             font_color = (255, 0, 0)
             font_stroke = 2
+            if name == -1:
+                name = "Unknown"
             cv2.putText(frame, name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         font_color, font_stroke)
             print(name)

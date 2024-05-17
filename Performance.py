@@ -1,7 +1,7 @@
 from Image import Image
 from PCAClass import PCAClass
 from DatasetClass import DatasetClass
-from imageToMatrixClass import ImageToMatrixClass
+from ImageToMatrixClass import ImageToMatrixClass
 from sklearn.preprocessing import label_binarize
 from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
@@ -62,7 +62,13 @@ class Performance(Image):
         else:
             img = self.PCAClass_obj.image_from_path(
                 self.imgs_paths_testing[self.no_button_clicks])
-            self.display_image(img)
+            
+            # self.display_image(img)
+            self.ax.clear()
+            self.figure.subplots_adjust(left=0, right=1, bottom=0, top=1)
+            self.ax.imshow(img,cmap='gray')
+            self.ax.axis('off')
+            self.draw_idle()
             new_coords_for_img = self.PCAClass_obj.new_coord(img)
 
             finded_name = self.PCAClass_obj.recognize_face(new_coords_for_img)

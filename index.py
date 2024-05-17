@@ -42,6 +42,7 @@ class MainApp(QMainWindow, FORM_CLASS):
 
     def performance_button_pressed(self):
         self.performance_img_input.show_performace()
+        
     
     
 
